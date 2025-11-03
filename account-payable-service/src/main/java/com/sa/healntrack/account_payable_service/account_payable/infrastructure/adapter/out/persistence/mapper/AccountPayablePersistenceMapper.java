@@ -1,7 +1,9 @@
 package com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.persistence.mapper;
 
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import com.sa.healntrack.account_payable_service.account_payable.domain.AccountPayable;
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.persistence.entity.AccountPayableEntity;
@@ -17,5 +19,13 @@ public interface AccountPayablePersistenceMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     AccountPayableEntity fromDomain(AccountPayable accountPayable);
+
+    @AfterMapping
+    default void setBidirectionalRelationships(@MappingTarget AccountPayableEntity entity) {
+        if (entity.getItems() != null) {
+            entity.getItems()
+            .forEach(staff -> staff.setAccountPayable(entity));
+        }
+    }
 
 }

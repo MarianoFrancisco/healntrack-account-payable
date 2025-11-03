@@ -8,7 +8,6 @@ import java.util.UUID;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.AccountPayableId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.HospitalizationId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.Money;
-import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.ReferenceId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.Status;
 
 import lombok.Getter;
@@ -40,25 +39,32 @@ public class AccountPayable {
         this.totalFee = new Money(sum);
     }
 
-    public void addItem(AccountPayableItem item) {
+    private void validateIsClosed() {
         if (this.status == Status.CLOSED) {
             throw new IllegalStateException("No se pueden agregar items a una cuenta cerrada");
         }
+    }
+
+    public void addItem(AccountPayableItem item) {
+        this.validateIsClosed();
         this.items.add(item);
         this.recalculateTotalFee();
     }
 
-    public void removeItem(ReferenceId referenceId) {
-        if (this.status == Status.CLOSED) {
-            throw new IllegalStateException("No se pueden remover items de una cuenta cerrada");
-        }
-        this.items.removeIf(item -> item.getReferenceId().equals(referenceId));
+    public void removeItem(UUID referenceId) {
+        validateIsClosed();
+        this.items.removeIf(item -> item.getReferenceId()
+                .value().equals(referenceId));
         this.recalculateTotalFee();
     }
 
     public void close() {
         this.status = Status.CLOSED;
         this.closingDate = LocalDate.now();
+    }
+
+    public List<AccountPayableItem> getItems() {
+        return List.copyOf(this.items);
     }
     
 }
