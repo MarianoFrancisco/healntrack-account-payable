@@ -22,6 +22,6 @@ create table account_payable_item (
     service_date date not null,
     created_at timestamp not null,
     updated_at timestamp not null,
-    constraint fk_account_payable foreign key(account_payable_id) references account_payable(id),
-    constraint fk_service_type foreign key(service_type_id) references service_type(id)
+    foreign key(account_payable_id) references account_payable(id),
+    foreign key(service_type_id) references service_type(id)
 );

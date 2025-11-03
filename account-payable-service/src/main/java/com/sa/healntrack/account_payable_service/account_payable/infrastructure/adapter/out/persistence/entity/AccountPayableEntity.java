@@ -41,7 +41,7 @@ public class AccountPayableEntity {
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "accountPayable",
-            cascade = CascadeType.ALL,
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE },
             orphanRemoval = true)
     private List<AccountPayableItemEntity> items;
     @CreationTimestamp
