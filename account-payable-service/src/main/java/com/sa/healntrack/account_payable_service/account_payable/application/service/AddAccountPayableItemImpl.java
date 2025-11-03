@@ -41,7 +41,7 @@ public class AddAccountPayableItemImpl implements AddAccountPayableItem {
                         "No existe una cuenta a pagar asociada a la hospitalizacion con id: "
                         + command.hospitalizationId()));
         boolean existsItemByReferenceId = existsAccountPayableItemByReferenceId
-                .exists(command.referenceId());
+                .existsByReferenceId(command.referenceId());
         if (existsItemByReferenceId) {
             throw new EntityAlreadyExistsException(
                     "Ya existe un item cuya referencia tiene el id: " + command.referenceId());

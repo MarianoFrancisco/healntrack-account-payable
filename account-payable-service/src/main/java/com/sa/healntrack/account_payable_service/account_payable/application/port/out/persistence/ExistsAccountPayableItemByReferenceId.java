@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public interface ExistsAccountPayableItemByReferenceId {
     
-    boolean exists(UUID referendeId);
+    boolean existsByReferenceId(UUID referendeId);
 
 }

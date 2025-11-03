@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public interface ExistsAccountPayableByHospitalizationId {
 
-    boolean exists(UUID hospitalizationId);
+    boolean existsByHospitalizationId(UUID hospitalizationId);
     
 }

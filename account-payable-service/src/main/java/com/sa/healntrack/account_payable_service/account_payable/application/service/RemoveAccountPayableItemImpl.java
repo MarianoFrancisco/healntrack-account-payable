@@ -35,7 +35,7 @@ public class RemoveAccountPayableItemImpl implements RemoveAccountPayableItem {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No existe un item cuya referencia tenga el id: "
                         + command.referenceId()));
-        accountPayable.removeItem(accountPayableItem);
+        accountPayable.removeItem(accountPayableItem.getReferenceId());
         saveAccountPayable.save(accountPayable);
     }
 

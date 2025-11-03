@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.AccountPayableId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.HospitalizationId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.Money;
+import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.ReferenceId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.Status;
 
 import lombok.Getter;
@@ -47,15 +48,11 @@ public class AccountPayable {
         this.recalculateTotalFee();
     }
 
-    public void removeItem(AccountPayableItem item) {
+    public void removeItem(ReferenceId referenceId) {
         if (this.status == Status.CLOSED) {
             throw new IllegalStateException("No se pueden remover items de una cuenta cerrada");
         }
-        boolean removed = this.items.removeIf(i -> i.getId().equals(item.getId()));
-        if (!removed) {
-            throw new IllegalArgumentException(
-                    "No se encontró un item con id: " + item.getId().value());
-        }
+        this.items.removeIf(item -> item.getReferenceId().equals(referenceId));
         this.recalculateTotalFee();
     }
 

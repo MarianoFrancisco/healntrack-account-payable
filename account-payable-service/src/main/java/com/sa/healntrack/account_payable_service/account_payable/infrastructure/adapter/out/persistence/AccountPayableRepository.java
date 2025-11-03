@@ -40,7 +40,7 @@ public class AccountPayableRepository implements SaveAccountPayable,
 
     @Transactional(readOnly = true)
     @Override
-    public boolean exists(UUID hospitalizationId) {
+    public boolean existsByHospitalizationId(UUID hospitalizationId) {
         return repository.existsByHospitalizationId(hospitalizationId);
     }
 

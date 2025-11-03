@@ -23,7 +23,7 @@ public class AccountPayableItemRepository implements ExistsAccountPayableItemByR
 
     @Transactional(readOnly = true)
     @Override
-    public boolean exists(UUID referendeId) {
+    public boolean existsByReferenceId(UUID referendeId) {
         return repository.existsByReferenceId(referendeId);
     }
 

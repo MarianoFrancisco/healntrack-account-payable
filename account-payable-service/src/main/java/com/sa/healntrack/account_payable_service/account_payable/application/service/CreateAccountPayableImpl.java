@@ -25,7 +25,7 @@ public class CreateAccountPayableImpl implements CreateAccountPayable {
     @Override
     public void create(CreateAccountPayableCommand command) {
         boolean existsByHospitalizationId = existsAccountPayableByHospitalizationId
-                .exists(command.hospitalizationId());
+                .existsByHospitalizationId(command.hospitalizationId());
         if (existsByHospitalizationId) {
             throw new EntityAlreadyExistsException(
                     "Ya existe una cuenta a pagar para la hospitalizacion con id: "
