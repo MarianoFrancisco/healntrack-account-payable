@@ -2,6 +2,7 @@ package com.sa.healntrack.account_payable_service.account_payable.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,9 @@ public class AccountPayable {
         this.totalFee = new Money(totalFee);
         this.status = status;
         this.closingDate = closingDate;
-        this.items = items;
+        this.items = new ArrayList<>(
+                items != null ? items: List.of()
+        );
     }
 
     private void recalculateTotalFee() {

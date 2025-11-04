@@ -13,7 +13,7 @@ public interface AccountPayableMapper {
     @Mapping(target = "totalFee", expression = "java(java.math.BigDecimal.ZERO)")
     @Mapping(target = "status", constant = "PENDING")
     @Mapping(target = "closingDate", ignore = true)
-    @Mapping(target = "items", expression = "java(new java.util.ArrayList<>())")
+    @Mapping(target = "items", ignore = true)
     AccountPayable toDomain(CreateAccountPayableCommand command);
 
 }
