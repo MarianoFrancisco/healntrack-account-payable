@@ -6,18 +6,26 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sa.healntrack.account_payable_service.common.application.exception.EntityAlreadyExistsException;
 import com.sa.healntrack.account_payable_service.common.application.exception.EntityNotFoundException;
 import com.sa.healntrack.account_payable_service.common.infrastructure.exception.util.ExceptionUtils;
 
+import feign.FeignException;
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private final ObjectMapper objectMapper;
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
     public ProblemDetail handleEntityAlreadyExistsException(EntityAlreadyExistsException e) {
@@ -89,6 +97,22 @@ public class GlobalExceptionHandler {
         problemDetail.setProperty("error_category", "Domain");
         problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<Object> handleFeignException(FeignException e) {
+        try {
+            String body = e.contentUTF8();
+            JsonNode json = objectMapper.readTree(body);
+            return ResponseEntity
+                    .status(e.status())
+                    .body(json);
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", ex.getMessage()));
+        }
+
     }
     
 }

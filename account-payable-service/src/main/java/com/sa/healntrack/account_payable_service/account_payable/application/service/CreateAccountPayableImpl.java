@@ -8,6 +8,7 @@ import com.sa.healntrack.account_payable_service.account_payable.application.por
 import com.sa.healntrack.account_payable_service.account_payable.application.port.in.create_account_payable.CreateAccountPayableCommand;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.persistence.ExistsAccountPayableByHospitalizationId;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.persistence.SaveAccountPayable;
+import com.sa.healntrack.account_payable_service.account_payable.application.port.out.rest.hospitalization.CheckHospitalizationById;
 import com.sa.healntrack.account_payable_service.account_payable.domain.AccountPayable;
 import com.sa.healntrack.account_payable_service.common.application.exception.EntityAlreadyExistsException;
 
@@ -19,11 +20,13 @@ import lombok.RequiredArgsConstructor;
 public class CreateAccountPayableImpl implements CreateAccountPayable {
 
     private final AccountPayableMapper mapper;
+    private final CheckHospitalizationById checkHospitalizationById;
     private final ExistsAccountPayableByHospitalizationId existsAccountPayableByHospitalizationId;
     private final SaveAccountPayable saveAccountPayable;
     
     @Override
     public void create(CreateAccountPayableCommand command) {
+        checkHospitalizationById.checkById(command.hospitalizationId());
         boolean existsByHospitalizationId = existsAccountPayableByHospitalizationId
                 .existsByHospitalizationId(command.hospitalizationId());
         if (existsByHospitalizationId) {
