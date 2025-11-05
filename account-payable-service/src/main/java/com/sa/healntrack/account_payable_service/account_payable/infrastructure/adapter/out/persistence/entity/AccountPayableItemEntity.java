@@ -34,7 +34,7 @@ public class AccountPayableItemEntity {
     @JoinColumn(name = "account_payable_id")
     private AccountPayableEntity accountPayable;
     @ManyToOne
-    @JoinColumn(name = "service_type")
+    @JoinColumn(name = "service_type_id")
     private ServiceTypeEntity serviceType;
     private UUID referenceId;
     private BigDecimal fee;
