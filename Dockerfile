@@ -14,6 +14,6 @@ WORKDIR /app
 
 COPY --from=build /app/target/account-payable-service-1.0.0.jar app.jar
 
-EXPOSE 8007
+EXPOSE 8003
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
