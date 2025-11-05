@@ -2,6 +2,6 @@ package com.sa.healntrack.account_payable_service.account_payable.application.po
 
 public interface AddAccountPayableItem {
     
-    void create(AddAccountPayableItemCommand command);
+    void add(AddAccountPayableItemCommand command);
 
 }

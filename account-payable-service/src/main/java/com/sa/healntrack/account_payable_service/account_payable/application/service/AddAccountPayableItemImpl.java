@@ -30,7 +30,7 @@ public class AddAccountPayableItemImpl implements AddAccountPayableItem {
     private final SaveAccountPayable saveAccountPayable;
 
     @Override
-    public void create(AddAccountPayableItemCommand command) {
+    public void add(AddAccountPayableItemCommand command) {
         ServiceType serviceType = findServiceTypeByName
                 .findByName(command.service())
                 .orElseThrow(() -> new EntityNotFoundException(
