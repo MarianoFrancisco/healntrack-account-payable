@@ -18,7 +18,7 @@ public class AccountPayableItem {
     private final AccountPayableItemId id;
     private final ServiceType serviceType;
     private final ReferenceId referenceId;
-    private final Money fee;
+    private Money fee;
     private final LocalDate serviceDate;
 
     public AccountPayableItem(UUID id, ServiceType serviceType,
@@ -28,6 +28,10 @@ public class AccountPayableItem {
         this.referenceId = new ReferenceId(referenceId);
         this.fee = new Money(fee);
         this.serviceDate = serviceDate;
+    }
+
+    public void updateFee(BigDecimal newFee) {
+        this.fee = new Money(newFee);
     }
 
 

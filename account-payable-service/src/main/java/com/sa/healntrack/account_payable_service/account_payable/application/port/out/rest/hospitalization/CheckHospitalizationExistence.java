@@ -2,8 +2,8 @@ package com.sa.healntrack.account_payable_service.account_payable.application.po
 
 import java.util.UUID;
 
-public interface CheckHospitalizationById {
+public interface CheckHospitalizationExistence {
     
-    void checkById(UUID id);
+    void checkExistence(UUID id);
 
 }

@@ -27,6 +27,15 @@ public class GlobalExceptionHandler {
 
     private final ObjectMapper objectMapper;
 
+    @ExceptionHandler(MessageSerializationException.class)
+    public ProblemDetail handleMessageSerializationException(MessageSerializationException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        problemDetail.setTitle("Serialization Error");
+        problemDetail.setProperty("error_category", "Generic");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
     @ExceptionHandler(EntityAlreadyExistsException.class)
     public ProblemDetail handleEntityAlreadyExistsException(EntityAlreadyExistsException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());

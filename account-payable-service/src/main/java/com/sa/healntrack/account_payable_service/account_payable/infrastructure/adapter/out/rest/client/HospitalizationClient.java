@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface HospitalizationClient {
     
     @GetMapping("/{id}")
-    void checkHospitalization(@PathVariable UUID id);
+    void findById(@PathVariable UUID id);
 
 }

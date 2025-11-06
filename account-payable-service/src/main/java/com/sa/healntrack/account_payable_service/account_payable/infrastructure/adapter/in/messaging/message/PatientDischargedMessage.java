@@ -1,4 +1,4 @@
-package com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.event.message;
+package com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.messaging.message;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

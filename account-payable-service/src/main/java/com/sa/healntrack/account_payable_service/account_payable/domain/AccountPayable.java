@@ -42,9 +42,9 @@ public class AccountPayable {
         this.totalFee = new Money(sum);
     }
 
-    private void validateIsClosed() {
+    public void validateIsClosed() {
         if (this.status == Status.CLOSED) {
-            throw new IllegalStateException("No se pueden agregar items a una cuenta cerrada");
+            throw new IllegalStateException("No se pueden modificar items en una cuenta cerrada");
         }
     }
 

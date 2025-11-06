@@ -31,7 +31,7 @@ public class AccountPayableItemEntity {
     @Id
     private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_payable_id")
+    @JoinColumn(name = "account_payable_id", updatable = false)
     private AccountPayableEntity accountPayable;
     @ManyToOne
     @JoinColumn(name = "service_type_id")
