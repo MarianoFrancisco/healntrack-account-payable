@@ -2,6 +2,7 @@ package com.sa.healntrack.account_payable_service.account_payable.infrastructure
 
 import java.io.IOException;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -29,55 +30,55 @@ public class AccountPayableConsumer {
     private final UpdateAccountPayableItem updateAccountPayableItem;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "hospitalization.created", groupId = "account-payable-service-hc")
-    public void listenHospitalizationCreated(byte[] data) {
+    @KafkaListener(topics = "hospitalization.created")
+    public void listenHospitalizationCreated(ConsumerRecord<String, byte[]> record) {
         try {
             HospitalizationCreatedMessage message = objectMapper
-                    .readValue(data, HospitalizationCreatedMessage.class);
+                    .readValue(record.value(), HospitalizationCreatedMessage.class);
             createAccountPayable.create(mapper.toCommand(message));
         } catch (IOException e) {
             throw new MessageSerializationException("No se pudo deserializar el mensaje");
         }
     }
 
-    @KafkaListener(topics = "hospitalization.patient-discharged", groupId = "account-payable-service-pd")
-    public void listenPatientDischarged(byte[] data) {
+    @KafkaListener(topics = "hospitalization.patient-discharged")
+    public void listenPatientDischarged(ConsumerRecord<String, byte[]> record) {
         try {
             PatientDischargedMessage message = objectMapper
-                    .readValue(data, PatientDischargedMessage.class);
+                    .readValue(record.value(), PatientDischargedMessage.class);
             addAccountPayableItem.add(mapper.toCommand(message));
         } catch (IOException e) {
             throw new MessageSerializationException("No se pudo deserializar el mensaje");
         }
     }
 
-    @KafkaListener(topics = "hospitalization.surgery-created", groupId = "account-payable-service-sc")
-    public void listenSurgeryCreated(byte[] data) {
+    @KafkaListener(topics = "hospitalization.surgery-created")
+    public void listenSurgeryCreated(ConsumerRecord<String, byte[]> record) {
         try {
             SurgeryCreatedMessage message = objectMapper
-                    .readValue(data, SurgeryCreatedMessage.class);
+                    .readValue(record.value(), SurgeryCreatedMessage.class);
             addAccountPayableItem.add(mapper.toCommand(message));
         } catch (IOException e) {
             throw new MessageSerializationException("No se pudo deserializar el mensaje");
         }
     }
 
-    @KafkaListener(topics = "hospitalization.surgery-updated", groupId = "account-payable-service-su")
-    public void listenSurgeryUpdated(byte[] data) {
+    @KafkaListener(topics = "hospitalization.surgery-updated")
+    public void listenSurgeryUpdated(ConsumerRecord<String, byte[]> record) {
         try {
             SurgeryUpdatedMessage message = objectMapper
-                    .readValue(data, SurgeryUpdatedMessage.class);
+                    .readValue(record.value(), SurgeryUpdatedMessage.class);
             updateAccountPayableItem.update(mapper.toCommand(message));
         } catch (IOException e) {
             throw new MessageSerializationException("No se pudo deserializar el mensaje");
         }
     }
 
-    @KafkaListener(topics = "pharmacy.medication-created", groupId = "account-payable-service-mc")
-    public void listenMedicationCreated(byte[] data) {
+    @KafkaListener(topics = "pharmacy.medication-created")
+    public void listenMedicationCreated(ConsumerRecord<String, byte[]> record) {
         try {
             MedicationCreatedMessage message = objectMapper
-                    .readValue(data, MedicationCreatedMessage.class);
+                    .readValue(record.value(), MedicationCreatedMessage.class);
             addAccountPayableItem.add(mapper.toCommand(message));
         } catch (IOException e) {
             throw new MessageSerializationException("No se pudo deserializar el mensaje");

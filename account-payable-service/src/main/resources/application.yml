@@ -12,9 +12,14 @@ spring:
     bootstrap-servers:
     - ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
     consumer:
+      group-id: account-payable-service
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
       auto-offset-reset: latest
+      enable-auto-commit: false
+    listener:
+      ack-mode: record
+      concurrency: ${KAFKA_CONCURRENCY:3}
 
 server:
   port: ${PORT:8003}
