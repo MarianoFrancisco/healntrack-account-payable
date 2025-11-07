@@ -12,6 +12,7 @@ import com.sa.healntrack.account_payable_service.account_payable.infrastructure.
 public interface AccountPayableOutMessagingMapper {
     
     @Mapping(target = "service", source = "item.serviceType.name.value")
+    @Mapping(target = "fee", source = "item.fee.value")
     AccountPayableClosedMessage toClosedMessage(AccountPayableItem item, UUID patientId);
 
 }
