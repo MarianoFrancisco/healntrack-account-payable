@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public record CreateAccountPayableCommand(
 
-        UUID hospitalizationId
+        UUID hospitalizationId,
+        UUID patientId
 
 ) { }

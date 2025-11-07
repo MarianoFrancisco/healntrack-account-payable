@@ -9,6 +9,12 @@ import com.sa.healntrack.account_payable_service.account_payable.infrastructure.
 
 public class AccountPayableSpecs {
 
+    public static Specification<AccountPayableEntity> hasPatientId(UUID patientId) {
+        return (root, query, criteriaBuilder) -> (patientId == null)
+                ? null
+                : criteriaBuilder.equal(root.get("patientId"), patientId);
+    }
+
     public static Specification<AccountPayableEntity> hasHospitalizationId(UUID hospitalizationId) {
         return (root, query, criteriaBuilder) -> (hospitalizationId == null)
                 ? null

@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.AccountPayableId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.HospitalizationId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.Money;
+import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.PatientId;
 import com.sa.healntrack.account_payable_service.account_payable.domain.value_object.Status;
 
 import lombok.Getter;
@@ -18,15 +19,17 @@ public class AccountPayable {
 
     private final AccountPayableId id;
     private final HospitalizationId hospitalizationId;
+    private final PatientId patientId;
     private Money totalFee;
     private Status status;
     private LocalDate closingDate;
     private final List<AccountPayableItem> items;
 
-    public AccountPayable(UUID id, UUID hospitalizationId, BigDecimal totalFee,
+    public AccountPayable(UUID id, UUID hospitalizationId, UUID patientId, BigDecimal totalFee,
             Status status, LocalDate closingDate, List<AccountPayableItem> items) {
         this.id = new AccountPayableId(id);
         this.hospitalizationId = new HospitalizationId(hospitalizationId);
+        this.patientId = new PatientId(patientId);
         this.totalFee = new Money(totalFee);
         this.status = status;
         this.closingDate = closingDate;

@@ -15,6 +15,7 @@ public interface AccountPayablePersistenceMapper {
 
     @Mapping(target = "id", source = "accountPayable.id.value")
     @Mapping(target = "hospitalizationId", source = "accountPayable.hospitalizationId.value")
+    @Mapping(target = "patientId", source = "accountPayable.patientId.value")
     @Mapping(target = "totalFee", source = "accountPayable.totalFee.value")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)

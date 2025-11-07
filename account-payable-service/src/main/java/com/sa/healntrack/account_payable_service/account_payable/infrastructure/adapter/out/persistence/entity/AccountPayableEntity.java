@@ -33,6 +33,7 @@ public class AccountPayableEntity {
     @Id
     private UUID id;
     private UUID hospitalizationId;
+    private UUID patientId;
     private BigDecimal totalFee;
     @Enumerated(EnumType.STRING)
     private Status status;
