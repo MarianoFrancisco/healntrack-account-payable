@@ -26,7 +26,8 @@ public class AccountPayablePublisher implements PublishAccountPayableClosed {
     public void publishClosedMessage(AccountPayable accountPayable) {
         for (AccountPayableItem item : accountPayable.getItems()) {
             try {
-                AccountPayableClosedMessage message = mapper.toClosedMessage(item);
+                AccountPayableClosedMessage message = mapper
+                        .toClosedMessage(item, accountPayable.getPatientId().value());
                 template.send("accountpayable.closed", objectMapper.writeValueAsBytes(message));
             } catch (JsonProcessingException e) {
                 throw new MessageSerializationException("No se pudo serializar el mensaje");

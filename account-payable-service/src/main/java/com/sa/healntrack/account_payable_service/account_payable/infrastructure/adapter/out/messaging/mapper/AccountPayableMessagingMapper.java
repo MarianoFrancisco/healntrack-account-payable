@@ -1,5 +1,7 @@
 package com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.messaging.mapper;
 
+import java.util.UUID;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -10,6 +12,7 @@ import com.sa.healntrack.account_payable_service.account_payable.infrastructure.
 public interface AccountPayableMessagingMapper {
     
     @Mapping(target = "referenceId", source = "item.referenceId.value")
-    AccountPayableClosedMessage toClosedMessage(AccountPayableItem item);
+    @Mapping(target = "service", source = "item.serviceType.name.value")
+    AccountPayableClosedMessage toClosedMessage(AccountPayableItem item, UUID patientId);
 
 }

@@ -5,6 +5,7 @@ import java.util.UUID;
 public record AccountPayableClosedMessage(
 
         UUID referenceId,
-        UUID patientId
+        UUID patientId,
+        String service
 
 ) { }
