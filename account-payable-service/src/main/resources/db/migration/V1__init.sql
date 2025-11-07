@@ -1,6 +1,7 @@
 create table account_payable (
     id uuid primary key,
     hospitalization_id uuid unique not null,
+    patient_id uuid not null,
     total_fee numeric(10,2) not null,
     status varchar(7) check (status in ('PENDING', 'CLOSED')) not null default 'PENDING',
     closing_date date,
