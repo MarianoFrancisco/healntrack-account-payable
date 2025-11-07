@@ -103,7 +103,7 @@ public class GlobalExceptionHandler {
     ProblemDetail handleIllegalStateException(IllegalStateException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
         problemDetail.setTitle("Illegal State");
-        problemDetail.setProperty("error_category", "Domain");
+        problemDetail.setProperty("error_category", "Validation");
         problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
     }

@@ -9,6 +9,7 @@ import com.sa.healntrack.account_payable_service.account_payable.application.por
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.messaging.PublishAccountPayableClosed;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.persistence.FindAccountPayableById;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.persistence.SaveAccountPayable;
+import com.sa.healntrack.account_payable_service.account_payable.application.port.out.rest.hospitalization.CheckHospitalizationDischarged;
 import com.sa.healntrack.account_payable_service.account_payable.domain.AccountPayable;
 import com.sa.healntrack.account_payable_service.common.application.exception.EntityNotFoundException;
 
@@ -21,6 +22,7 @@ public class CloseAccountPayableImpl implements CloseAccountPayable {
     
     private final FindAccountPayableById findAccountPayableById;
     private final SaveAccountPayable saveAccountPayable;
+    private final CheckHospitalizationDischarged checkHospitalizationDischarged;
     private final PublishAccountPayableClosed publishAccountPayableClosed;
 
     @Override
@@ -29,6 +31,13 @@ public class CloseAccountPayableImpl implements CloseAccountPayable {
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No existe una cuenta a pagar con id: " + id));
+        UUID hospitalizationId = accountPayable.getHospitalizationId().value();
+        boolean hasEnded = checkHospitalizationDischarged
+                .checkDischarged(hospitalizationId);
+        if (!hasEnded) {
+            throw new IllegalStateException(
+                    "No ha terminado la hospitalizacion con id: " + hospitalizationId);
+        }
         accountPayable.close();
         AccountPayable accountPayableSaved = saveAccountPayable.save(accountPayable);
         publishAccountPayableClosed
