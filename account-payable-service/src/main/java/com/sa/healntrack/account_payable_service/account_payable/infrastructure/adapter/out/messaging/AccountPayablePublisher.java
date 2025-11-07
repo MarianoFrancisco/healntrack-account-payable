@@ -1,7 +1,6 @@
 package com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.messaging;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -23,20 +22,13 @@ public class AccountPayablePublisher implements PublishAccountPayableClosed {
     private final KafkaTemplate<String, byte[]> template;
     private final ObjectMapper objectMapper;
     private final AccountPayableMessagingMapper mapper;
-    
-    private static final Map<String, String> TOPICS = Map.of(
-        "MED", "accountpayable.sale.completed"
-    );
 
     @Override
     public void publishClosedMessage(List<AccountPayableItem> items) {
         for (AccountPayableItem item : items) {
             try {
-                String topic = TOPICS.getOrDefault(
-                        item.getServiceType().getName().value(),
-                        "accountpayable.closed");
                 AccountPayableClosedMessage message = mapper.toClosedMessage(item);
-                template.send(topic, objectMapper.writeValueAsBytes(message));
+                template.send("accountpayable.closed", objectMapper.writeValueAsBytes(message));
             } catch (JsonProcessingException e) {
                 throw new MessageSerializationException("No se pudo serializar el mensaje");
             }
