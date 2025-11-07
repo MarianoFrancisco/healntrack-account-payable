@@ -11,7 +11,6 @@ import com.sa.healntrack.account_payable_service.account_payable.infrastructure.
 @Mapper(componentModel = "spring")
 public interface AccountPayableOutMessagingMapper {
     
-    @Mapping(target = "referenceId", source = "item.referenceId.value")
     @Mapping(target = "service", source = "item.serviceType.name.value")
     AccountPayableClosedMessage toClosedMessage(AccountPayableItem item, UUID patientId);
 
