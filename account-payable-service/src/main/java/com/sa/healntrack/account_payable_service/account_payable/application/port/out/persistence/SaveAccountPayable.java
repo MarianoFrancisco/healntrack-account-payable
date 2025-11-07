@@ -4,6 +4,6 @@ import com.sa.healntrack.account_payable_service.account_payable.domain.AccountP
 
 public interface SaveAccountPayable {
     
-    void save(AccountPayable accountPayable);
+    AccountPayable save(AccountPayable accountPayable);
 
 }

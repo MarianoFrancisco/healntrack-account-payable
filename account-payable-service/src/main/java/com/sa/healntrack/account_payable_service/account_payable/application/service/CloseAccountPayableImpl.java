@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sa.healntrack.account_payable_service.account_payable.application.port.in.close_account_payable.CloseAccountPayable;
+import com.sa.healntrack.account_payable_service.account_payable.application.port.out.messaging.PublishAccountPayableClosed;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.persistence.FindAccountPayableById;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.persistence.SaveAccountPayable;
 import com.sa.healntrack.account_payable_service.account_payable.domain.AccountPayable;
@@ -20,6 +21,7 @@ public class CloseAccountPayableImpl implements CloseAccountPayable {
     
     private final FindAccountPayableById findAccountPayableById;
     private final SaveAccountPayable saveAccountPayable;
+    private final PublishAccountPayableClosed publishAccountPayableClosed;
 
     @Override
     public void close(UUID id) {
@@ -28,7 +30,9 @@ public class CloseAccountPayableImpl implements CloseAccountPayable {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No existe una cuenta a pagar con id: " + id));
         accountPayable.close();
-        saveAccountPayable.save(accountPayable);
+        AccountPayable accountPayableSaved = saveAccountPayable.save(accountPayable);
+        publishAccountPayableClosed
+                .publishClosedMessage(accountPayableSaved.getItems());
     }
 
 }

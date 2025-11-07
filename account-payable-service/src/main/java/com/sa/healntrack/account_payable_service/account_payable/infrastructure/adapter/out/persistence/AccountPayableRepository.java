@@ -34,8 +34,10 @@ public class AccountPayableRepository implements SaveAccountPayable,
 
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
-    public void save(AccountPayable accountPayable) {
-        repository.save(mapper.fromDomain(accountPayable));
+    public AccountPayable save(AccountPayable accountPayable) {
+        AccountPayableEntity entity = repository
+                .save(mapper.fromDomain(accountPayable));
+        return mapper.toDomain(entity);
     }
 
     @Transactional(readOnly = true)
