@@ -32,7 +32,7 @@ public class CloseAccountPayableImpl implements CloseAccountPayable {
         accountPayable.close();
         AccountPayable accountPayableSaved = saveAccountPayable.save(accountPayable);
         publishAccountPayableClosed
-                .publishClosedMessage(accountPayableSaved.getItems());
+                .publishClosedMessage(accountPayableSaved);
     }
 
 }

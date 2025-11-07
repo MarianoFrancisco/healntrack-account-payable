@@ -1,13 +1,12 @@
 package com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.messaging;
 
-import java.util.List;
-
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.out.messaging.PublishAccountPayableClosed;
+import com.sa.healntrack.account_payable_service.account_payable.domain.AccountPayable;
 import com.sa.healntrack.account_payable_service.account_payable.domain.AccountPayableItem;
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.messaging.mapper.AccountPayableMessagingMapper;
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.messaging.message.AccountPayableClosedMessage;
@@ -24,8 +23,8 @@ public class AccountPayablePublisher implements PublishAccountPayableClosed {
     private final AccountPayableMessagingMapper mapper;
 
     @Override
-    public void publishClosedMessage(List<AccountPayableItem> items) {
-        for (AccountPayableItem item : items) {
+    public void publishClosedMessage(AccountPayable accountPayable) {
+        for (AccountPayableItem item : accountPayable.getItems()) {
             try {
                 AccountPayableClosedMessage message = mapper.toClosedMessage(item);
                 template.send("accountpayable.closed", objectMapper.writeValueAsBytes(message));
