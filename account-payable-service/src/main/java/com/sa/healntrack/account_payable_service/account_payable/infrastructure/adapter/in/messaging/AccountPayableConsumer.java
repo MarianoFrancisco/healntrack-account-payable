@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.in.add_account_payable_item.AddAccountPayableItem;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.in.create_account_payable.CreateAccountPayable;
 import com.sa.healntrack.account_payable_service.account_payable.application.port.in.update_account_payable_item.UpdateAccountPayableItem;
-import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.messaging.mapper.AccountPayableMessagingMapper;
+import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.messaging.mapper.AccountPayableInMessagingMapper;
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.messaging.message.HospitalizationCreatedMessage;
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.messaging.message.MedicationCreatedMessage;
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.messaging.message.PatientDischargedMessage;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 public class AccountPayableConsumer {
 
-    private final AccountPayableMessagingMapper mapper;
+    private final AccountPayableInMessagingMapper mapper;
     private final CreateAccountPayable createAccountPayable;
     private final AddAccountPayableItem addAccountPayableItem;
     private final UpdateAccountPayableItem updateAccountPayableItem;

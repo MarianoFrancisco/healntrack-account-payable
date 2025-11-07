@@ -9,7 +9,7 @@ import com.sa.healntrack.account_payable_service.account_payable.domain.AccountP
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.out.messaging.message.AccountPayableClosedMessage;
 
 @Mapper(componentModel = "spring")
-public interface AccountPayableMessagingMapper {
+public interface AccountPayableOutMessagingMapper {
     
     @Mapping(target = "referenceId", source = "item.referenceId.value")
     @Mapping(target = "service", source = "item.serviceType.name.value")

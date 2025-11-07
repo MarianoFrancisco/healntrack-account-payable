@@ -13,7 +13,7 @@ import com.sa.healntrack.account_payable_service.account_payable.infrastructure.
 import com.sa.healntrack.account_payable_service.account_payable.infrastructure.adapter.in.messaging.message.SurgeryUpdatedMessage;
 
 @Mapper(componentModel = "spring")
-public interface AccountPayableMessagingMapper {
+public interface AccountPayableInMessagingMapper {
     
     CreateAccountPayableCommand toCommand(HospitalizationCreatedMessage message);
 
