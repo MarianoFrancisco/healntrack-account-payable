@@ -41,7 +41,7 @@ public class AccountPayableConsumer {
         }
     }
 
-    @KafkaListener(topics = "hospitalization.patient-discharged")
+    @KafkaListener(topics = "hospitalization.patient.discharged")
     public void listenPatientDischarged(ConsumerRecord<String, byte[]> record) {
         try {
             PatientDischargedMessage message = objectMapper
@@ -52,7 +52,7 @@ public class AccountPayableConsumer {
         }
     }
 
-    @KafkaListener(topics = "hospitalization.surgery-created")
+    @KafkaListener(topics = "hospitalization.surgery.created")
     public void listenSurgeryCreated(ConsumerRecord<String, byte[]> record) {
         try {
             SurgeryCreatedMessage message = objectMapper
@@ -63,7 +63,7 @@ public class AccountPayableConsumer {
         }
     }
 
-    @KafkaListener(topics = "hospitalization.surgery-updated")
+    @KafkaListener(topics = "hospitalization.surgery.updated")
     public void listenSurgeryUpdated(ConsumerRecord<String, byte[]> record) {
         try {
             SurgeryUpdatedMessage message = objectMapper
@@ -74,7 +74,7 @@ public class AccountPayableConsumer {
         }
     }
 
-    @KafkaListener(topics = "pharmacy.medication-created")
+    @KafkaListener(topics = "pharmacy.medication.created")
     public void listenMedicationCreated(ConsumerRecord<String, byte[]> record) {
         try {
             MedicationCreatedMessage message = objectMapper
